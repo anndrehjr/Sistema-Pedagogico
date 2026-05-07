@@ -1,9 +1,19 @@
 "use client";
 
 import { SCHOOL_INFO } from "@/lib/school-data";
-import { GraduationCap, Calendar, MapPin } from "lucide-react";
+import { GraduationCap, Calendar, MapPin, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 export function DashboardHeader() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <header className="border-b-2 border-border bg-card/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-5">
@@ -20,7 +30,7 @@ export function DashboardHeader() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2 text-base text-muted-foreground">
               <MapPin className="h-5 w-5" />
               <span>{SCHOOL_INFO.city} - {SCHOOL_INFO.state}</span>
@@ -31,6 +41,27 @@ export function DashboardHeader() {
                 {SCHOOL_INFO.bimester} / {SCHOOL_INFO.year}
               </span>
             </div>
+            
+            {mounted && (
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="gap-2 border-2"
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun className="h-5 w-5" />
+                    <span className="hidden sm:inline">Modo Claro</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="h-5 w-5" />
+                    <span className="hidden sm:inline">Modo Escuro</span>
+                  </>
+                )}
+              </Button>
+            )}
           </div>
         </div>
       </div>

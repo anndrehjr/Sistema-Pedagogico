@@ -9,7 +9,6 @@ import {
   Bar,
   XAxis,
   YAxis,
-  Tooltip,
   ResponsiveContainer,
   Cell,
   LabelList,
@@ -38,7 +37,7 @@ export function CriticalStudentsList() {
 
   if (totalCritical === 0) {
     return (
-      <Card className="border-border bg-card">
+      <Card className="border-2 border-border bg-card">
         <CardHeader>
           <CardTitle className="text-xl">Alunos em Situacao Critica</CardTitle>
           <CardDescription className="text-base">Alunos com media abaixo de 5.0</CardDescription>
@@ -58,7 +57,7 @@ export function CriticalStudentsList() {
   }
 
   return (
-    <Card className="border-border bg-card">
+    <Card className="border-2 border-border bg-card">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -80,7 +79,7 @@ export function CriticalStudentsList() {
           <BarChart
             data={criticalByClassroom}
             layout="vertical"
-            margin={{ top: 10, right: 60, left: 10, bottom: 10 }}
+            margin={{ top: 10, right: 80, left: 10, bottom: 10 }}
           >
             <XAxis type="number" hide />
             <YAxis
@@ -91,32 +90,6 @@ export function CriticalStudentsList() {
               tickLine={false}
               width={60}
             />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "hsl(var(--card))",
-                border: "2px solid hsl(var(--border))",
-                borderRadius: "12px",
-                padding: "12px 16px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-              }}
-              labelStyle={{
-                color: "hsl(var(--foreground))",
-                fontSize: 16,
-                fontWeight: 600,
-                marginBottom: 8,
-              }}
-              itemStyle={{
-                color: "hsl(var(--foreground))",
-                fontSize: 14,
-              }}
-              formatter={(value: number, name: string, props: { payload: { total: number; percent: string } }) => {
-                return [`${value} de ${props.payload.total} alunos (${props.payload.percent}%)`, "Criticos"];
-              }}
-              labelFormatter={(label) => {
-                const item = criticalByClassroom.find((c) => c.name === label);
-                return item?.fullName || label;
-              }}
-            />
             <Bar dataKey="critical" radius={[0, 8, 8, 0]} maxBarSize={32}>
               {criticalByClassroom.map((entry, index) => (
                 <Cell
@@ -125,12 +98,11 @@ export function CriticalStudentsList() {
                 />
               ))}
               <LabelList
-                dataKey="critical"
+                dataKey={(entry: typeof criticalByClassroom[0]) => `${entry.critical} de ${entry.total}`}
                 position="right"
                 fill="hsl(var(--foreground))"
-                fontSize={16}
-                fontWeight={700}
-                formatter={(value: number) => `${value}`}
+                fontSize={14}
+                fontWeight={600}
               />
             </Bar>
           </BarChart>
@@ -140,7 +112,7 @@ export function CriticalStudentsList() {
           {criticalByClassroom.slice(0, 4).map((item) => (
             <div
               key={item.name}
-              className="flex flex-col items-center rounded-lg border border-border bg-secondary/30 p-3"
+              className="flex flex-col items-center rounded-lg border-2 border-border bg-secondary/30 p-3"
             >
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4 text-muted-foreground" />
@@ -154,7 +126,7 @@ export function CriticalStudentsList() {
           ))}
         </div>
 
-        <div className="mt-4 rounded-lg border border-warning/30 bg-warning/5 p-3">
+        <div className="mt-4 rounded-lg border-2 border-warning/30 bg-warning/5 p-3">
           <p className="text-sm text-warning-foreground">
             <strong>Recomendacao:</strong> Alunos em situacao critica necessitam de acompanhamento pedagogico 
             individualizado e possivel contato com as familias.

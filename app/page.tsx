@@ -10,6 +10,7 @@ import { CriticalStudentsList } from "@/components/dashboard/critical-students-l
 import { ClassroomAverageChart } from "@/components/dashboard/classroom-average-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PEDAGOGICAL_LEVELS } from "@/lib/school-data";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -18,7 +19,33 @@ import {
   Grid3X3,
 } from "lucide-react";
 
+const STORAGE_KEY = "dashboard-tab";
+
 export default function DashboardPage() {
+  const [activeTab, setActiveTab] = useState("overview");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      setActiveTab(stored);
+    }
+  }, []);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    localStorage.setItem(STORAGE_KEY, value);
+  };
+
+  if (!mounted) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="text-xl text-muted-foreground">Carregando...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardHeader />
@@ -41,7 +68,7 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
           <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2 bg-card p-2">
             <TabsTrigger
               value="overview"

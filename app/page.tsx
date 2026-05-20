@@ -146,7 +146,7 @@ export default function DashboardPage() {
         {/* Footer */}
         <footer className="mt-8 border-t-2 border-border pt-6 text-center">
           <p className="text-base text-muted-foreground">
-            Dados extraidos das Atas de Conselho de Classe - 1o Bimestre de 2026
+            Dados extraidos das Atas de Conselho de Classe - 1º Bimestre de 2026
           </p>
           <p className="mt-1 text-base text-muted-foreground">
             EE Carlos Bernardes Staut - Ribeirao dos Indios, SP

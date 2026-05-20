@@ -10,7 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Painel Analítico Educacional - EE Carlos Bernardes Staut',
   description: 'Sistema de inteligência pedagógica para análise de desempenho escolar - 1º Bimestre 2026',
-  generator: 'v0.app',
+
   icons: {
     icon: [
       {

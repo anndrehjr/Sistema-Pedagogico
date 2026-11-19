@@ -1,0 +1,40 @@
+{
+  "name": "sistema-pedagogico",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "tsx --test src/lib/analytics/*.test.ts src/lib/permissions.test.ts src/lib/auth-session.test.ts src/lib/notas-batch.test.ts src/lib/relatorios.test.ts src/lib/avaliacoes.test.ts src/lib/projecao-notas.test.ts src/lib/recuperacao.test.ts src/demo/seed.test.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "fflate": "^0.8.2",
+    "jose": "^6.2.15",
+    "lucide-react": "^1.70.0",
+    "motion": "^14.10.1",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.10.1",
+    "remark-gfm": "^4.0.1",
+    "tsx": "^4.23.15",
+    "@electric-sql/pglite": "^0.5.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "playwright": "^1.60.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5"
+  },
+  "description": "Sistema Pedagógico escolar (versão pública de demonstração, com dados fictícios)"
+}

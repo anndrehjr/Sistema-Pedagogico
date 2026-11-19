@@ -1,0 +1,49 @@
+import { redirect } from "next/navigation";
+import { ESCOLA_DEMO_ID } from '../../demo/constantes';
+import { requireAuth } from "../../lib/requireAuth";
+import { capabilitiesFor } from "../../types/roles";
+import DashboardConteudo from "../../components/escola-dashboard/DashboardConteudo";
+
+const ESCOLA_PADRAO = process.env.NEXT_PUBLIC_ESCOLA_ID ?? ESCOLA_DEMO_ID;
+
+type PageProps = {
+  searchParams: Promise<{ bimestre?: string; turma?: string; tab?: string; escola?: string }>;
+};
+
+export default async function DashboardPage({ searchParams }: PageProps) {
+  const usuario = await requireAuth();
+  if (!usuario) redirect("/login");
+
+  const params = await searchParams;
+
+  // Só o SUPER_ADMIN enxerga este dashboard "genérico"; os demais papéis são sempre
+  // escopados à própria escola — sem exceção, mesmo que naveguem direto para /dashboard.
+  // Preserva a query string (turma/tab/bimestre) pra não descartar links antigos ou salvos.
+  if (!capabilitiesFor(usuario.role).viewAllEscolas) {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined) as [string, string][]
+    ).toString();
+    redirect(`/dashboard/escolas/${usuario.escola_id}${qs ? `?${qs}` : ""}`);
+  }
+
+  const escolaId = params.escola ?? ESCOLA_PADRAO;
+  if (!escolaId) {
+    return (
+      <main className="min-h-screen p-8 flex items-center justify-center">
+        <div className="text-center">
+          <h1
+            className="text-2xl font-semibold"
+            style={{ color: "var(--status-danger-bg)" }}
+          >
+            Escola não encontrada
+          </h1>
+          <p className="mt-2 text-sm" style={{ color: "var(--text-secondary)" }}>
+            Verifique NEXT_PUBLIC_ESCOLA_ID no .env.local
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  return <DashboardConteudo usuario={usuario} escolaId={escolaId} searchParams={params} />;
+}

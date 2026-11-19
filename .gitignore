@@ -1,0 +1,41 @@
+# dependências e builds
+node_modules/
+.next/
+out/
+build/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# variáveis de ambiente e segredos (nunca versionar)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# dados escolares, backups e dumps (nunca versionar)
+*.dump
+*.backup
+*.bak
+*.sql.gz
+*.csv
+*.xlsx
+*.xls
+backups/
+dados-reais/
+credenciais*.txt
+credenciais*.html
+
+# logs e arquivos temporários
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.vercel/
+playwright-report/
+test-results/
